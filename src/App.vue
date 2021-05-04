@@ -9,9 +9,7 @@
 export default {
   name: "App",
   data() {
-    return {
-      num: 6,
-    };
+    return {};
   },
 };
 </script>

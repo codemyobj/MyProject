@@ -11,6 +11,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 //加载全局样式文件
 import './assets/css/index.less'
 
+
+
 //全局注册饿了么UI组件
 Vue.use(ElementUI)
 

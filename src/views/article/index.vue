@@ -112,7 +112,13 @@
         <el-table-column label="操作">
           <!-- 如果需要自定义表格列模板 则把自定义的内容放到template里 -->
           <template slot-scope="scope">
-            <el-button size="mini" circle icon="el-icon-edit" type="primary"></el-button>
+            <el-button
+              size="mini"
+              circle
+              icon="el-icon-edit"
+              type="primary"
+              @click="$router.push('/publish?id=' + scope.row.id)"
+            ></el-button>
             <el-button
               size="mini"
               type="danger"

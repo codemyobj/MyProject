@@ -32,6 +32,23 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+
+          <!-- 需要把选择的图片的地址放到article.cover.images数组中 -->
+          <!-- 当你给事件处理函数传递了自定义参数以后就无法得到原本的数据参数了 如果想得到的话就传个$event 这个值是固定的 
+          -->
+          <template v-if="article.cover.type > 0">
+            <upload-cover
+              v-for="(item,index) in article.cover.type"
+              :key="index"
+              v-model="article.cover.images[index]"
+            />
+            <!-- <upload-cover
+              v-for="(item,index) in article.cover.type"
+              :key="index"
+              @updata-cover="onUpdateCover(index,$event)"
+              :coverImage="article.cover.images[index]"
+            />-->
+          </template>
         </el-form-item>
 
         <el-form-item label="频道" prop="channel_id">
@@ -53,6 +70,8 @@
 </template>
 
 <script>
+import UploadCover from "./childComps/upload-cover";
+
 import "element-tiptap/lib/index.css";
 import {
   ElementTiptap,
@@ -89,6 +108,7 @@ export default {
   name: "publishIndex",
   components: {
     "el-tiptap": ElementTiptap,
+    UploadCover,
   },
   props: {},
   data() {
@@ -99,7 +119,7 @@ export default {
         content: "", //文章的内容
         cover: {
           //文章封面
-          type: 0, //封面的类型
+          type: 1, //封面的类型
           images: [], //封面图片的地址
         },
         channel_id: null,
@@ -219,6 +239,9 @@ export default {
         this.article = res.data.data;
       });
       //模板绑定展示
+    },
+    onUpdateCover(index, url) {
+      this.article.cover.images[index] = url;
     },
   },
 };

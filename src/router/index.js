@@ -48,7 +48,7 @@ const routes = [
       {
         path: '/publish',
         name: 'publish',
-        component: Publish
+        component: Publish,
       },
       {
         path: '/comment',

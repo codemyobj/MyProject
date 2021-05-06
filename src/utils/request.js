@@ -1,7 +1,9 @@
 //基于axios封装的请求模块
 import axios from 'axios'
 import JSONbig from 'json-bigint'
-
+import router from 'vue-router'
+// 非组件模块加载使用
+import { Message } from 'element-ui'
 
 //创建一个axios实例 
 //通过这个实例发送请求
@@ -55,6 +57,31 @@ request.interceptors.request.use(function (config) {
   })
 
 //响应拦截器
+request.interceptors.response.use(function (response) {
+  //成功的响应 2xx 进入这里
+  return response
+}, function (err) {
+  const { status } = err.response
+  //超出2xx的响应码进入这里
+  if (status === 401) {
+    // 跳转到登录页面
+    // 清除本地存储中的用户登录状态
+    window.localStorage.removeItem('user')
+    router.push('/login')
+    Message.error('登录状态无效,请重新登录')
+
+  } else if (status === 403) {
+    // token未携带或已过期
+    Message.warning('没有操作权限')
+
+  } else if (status >= 400) {
+    // 参数错误
+    Message.error('请求参数异常')
+  } else if (status >= 500) {
+    Message.error('服务器内部异常,请稍后重试')
+  }
+  return Promise.reject(err)
+})
 
 //导出请求方法
 export default request

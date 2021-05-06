@@ -20,7 +20,7 @@
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>-->
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>设置</el-dropdown-item>
+        <el-dropdown-item @click.native="onSetting">设置</el-dropdown-item>
         <!-- 组件默认是不识别原生的事件 除非内部处理 .native -->
         <el-dropdown-item @click.native="onLogout">退出</el-dropdown-item>
       </el-dropdown-menu>
@@ -81,6 +81,9 @@ export default {
             message: "已取消退出",
           });
         });
+    },
+    onSetting() {
+      this.$router.push("/settings");
     },
   },
 };
